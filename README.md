@@ -8,6 +8,11 @@
 
 > Client-side, deterministic templates and rules. No remote AI model or automated quote generation. This does not promise leads, sales or rankings.
 
+![SpecPilot Pro desktop blueprint studio](docs/assets/specpilot-desktop.webp)
+
+[Mobile UI screenshot](docs/assets/specpilot-mobile.webp)
+
+
 ## Purpose
 
 Turn a vague request for an MT5 trading bot, AI agent, web app, SaaS portal, API integration, ecommerce automation, mobile app, or voice receptionist into a useful starting scope **before** involving a developer.

@@ -1,0 +1,31 @@
+name: SpecPilot Pro — blueprint engine and browser safety
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax check
+        run: npm run check
+      - name: Run deterministic blueprint tests
+        run: npm test
+      - name: Verify deployable static UI
+        run: |
+          node --input-type=module - <<'JS'
+          import fs from 'node:fs';
+          const html=fs.readFileSync('src/index.html','utf8');
+          const js=fs.readFileSync('src/app.js','utf8');
+          for(const f of ['styles.css','app.js']) if(!html.includes(f)) throw Error('Missing '+f);
+          if(!js.includes('nextgen_specpilot_handoff')) throw Error('Contact handoff missing');
+          if(js.includes('fetch(')||js.includes('XMLHttpRequest')) throw Error('Unexpected remote form transport');
+          console.log('Static assets and consent-first handoff verified');
+          JS
